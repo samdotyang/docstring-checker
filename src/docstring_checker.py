@@ -53,7 +53,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     # commit_file_list = get_commit_py()
-    for filename in args.filename:
+    for filename in args.filenames:
         return check_doc_string([filename])
 
 
