@@ -1,0 +1,6 @@
+- id: docstring-checker
+  name: check function contains docstring
+  description: prevent function without docstring
+  entry: docstring-checker
+  language: python
+  stages: [commit]
