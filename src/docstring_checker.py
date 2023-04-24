@@ -31,6 +31,7 @@ def get_commit_py() -> list:
 
 def check_doc_string(fp_list: List[PurePath]):
     """Checks function that contains docstring."""
+    no_docstring_list = []
     for fp in fp_list:
         with open(fp, 'r') as pyf:
             data = pyf.readlines()
@@ -42,9 +43,11 @@ def check_doc_string(fp_list: List[PurePath]):
                         if not functions_with_docstring:
                             no_docstring = re.match(re_without_docstring, check_line)
                             if no_docstring:
-                                print(f"functions that don't have docstring `{no_docstring.group(1)}`")
-                                return 1
-    return 0
+                                print(f"fp {fp} `{no_docstring.group(1)}` function does not have docstring")
+                                no_docstring_list.append(no_docstring.group(1))
+    if len(no_docstring_list) == 0:
+        return 0
+    return 1
 
 
 def main(argv: Sequence[str] | None = None) -> int:
