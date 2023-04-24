@@ -54,7 +54,6 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to check.')
     args = parser.parse_args(argv)
-    print(args.filenames)
     # commit_file_list = get_commit_py()
     for filename in args.filenames:
         return check_doc_string([filename])
