@@ -2,9 +2,11 @@
 
 import re
 import subprocess
+import argparse
 from pathlib import Path
 from pathlib import PurePath
 from typing import List
+from typing import Sequence
 
 GIT_DIFF_CMD = 'git diff --cached --name-only'
 GIT_CI_DIR = Path(__file__).parent.resolve()
@@ -45,9 +47,14 @@ def check_doc_string(fp_list: List[PurePath]):
     return 0
 
 
-def main():
-    commit_file_list = get_commit_py()
-    return check_doc_string(commit_file_list)
+def main(argv: Sequence[str] | None = None) -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument('filenames', nargs='*', help='Filenames to check.')
+    args = parser.parse_args(argv)
+
+    # commit_file_list = get_commit_py()
+    for filename in args.filename:
+        return check_doc_string([filename])
 
 
 if __name__ == "__main__":
