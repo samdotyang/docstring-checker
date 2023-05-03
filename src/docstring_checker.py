@@ -14,8 +14,8 @@ PROJECT_ROOT_DIR = GIT_CI_DIR.parent.resolve()
 
 whitelist_functions = ['main']
 
-re_with_docstring = r'def\s(\S+|_\S+)((\(.?|[\S\s]+\))).+:((\n)|(\r\n))[ \t]+\"{3}[^\"]+\"{3}$'
-re_without_docstring = r'def\s(\S+|\_S+)((\(.?|[\S\s]+\))).+:'
+re_with_docstring = r'def\s(\S[^\(]+|_\S[^\(]+)(\([^\)]*\))(\s*{?\s*)(\S*\s[a-z]+):(\n|\r\n)([ \t]+\"{3}[^\"]+\"{3}$)'
+re_without_docstring = r'def\s(\S[^\(]+|_\S[^\(]+)(\([^\)]*\))(\s*{?\s*)(\S*\s[a-z]+):$'
 
 def get_commit_py() -> list:
     """Gets commit python file."""
