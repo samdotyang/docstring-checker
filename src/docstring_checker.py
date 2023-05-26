@@ -33,18 +33,19 @@ def check_doc_string(fp_list: List[PurePath]):
     """Checks function that contains docstring."""
     no_docstring_list = []
     for fp in fp_list:
-        with open(fp, 'r') as pyf:
-            data = pyf.readlines()
-            for index, line in enumerate(data):
-                if line.startswith('def'):
-                    if not any(x in line for x in whitelist_functions):
-                        check_line = line + data[index + 1]
-                        functions_with_docstring = re.match(re_with_docstring, check_line)
-                        if not functions_with_docstring:
-                            no_docstring = re.match(re_without_docstring, check_line)
-                            if no_docstring:
-                                print(f"fp {fp} `{no_docstring.group(1)}` function does not have docstring")
-                                no_docstring_list.append(no_docstring.group(1))
+        if Path(fp).suffix == ".py":
+            with open(fp, 'r') as pyf:
+                data = pyf.readlines()
+                for index, line in enumerate(data):
+                    if line.startswith('def'):
+                        if not any(x in line for x in whitelist_functions):
+                            check_line = line + data[index + 1]
+                            functions_with_docstring = re.match(re_with_docstring, check_line)
+                            if not functions_with_docstring:
+                                no_docstring = re.match(re_without_docstring, check_line)
+                                if no_docstring:
+                                    print(f"fp {fp} `{no_docstring.group(1)}` function does not have docstring")
+                                    no_docstring_list.append(no_docstring.group(1))
     if len(no_docstring_list) == 0:
         return 0
     return 1
